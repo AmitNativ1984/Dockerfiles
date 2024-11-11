@@ -1,0 +1,77 @@
+// See https://aka.ms/vscode-remote/devcontainer.json for format details.
+{
+	"name": "${localWorkspaceFolderBasename}",
+	"dockerFile": "../ros2.pytorch.Dockerfile",
+	"build": {
+		"args": {
+			// "BASE_IMAGE": "ultralytics/ultralytics:latest-jetson-jetpack6",
+			// "BASE_IMAGE": "nvcr.io/nvidia/cuda:12.2.2-cudnn8-runtime-ubuntu22.04",
+			"BASE_IMAGE": "docker-registry.ironbrain.internal:5000/ros-pytorch-base:humble-pytorch2.3.0",
+			"ROS_DISTRO": "humble",
+			"USERNAME": "${localEnv:USER}"			
+		},
+		"target": "dev",
+		
+	},
+	"privileged": true,
+	"runArgs": [
+		"--network=host",
+		"--cap-add=SYS_PTRACE",
+		"--security-opt=seccomp:unconfined",
+		"--security-opt=apparmor:unconfined",
+		"-e",
+		"DISPLAY=${env:DISPLAY}",
+        "--shm-size=24G",
+		"--ipc=host",
+		"--pid=host",
+		"--ulimit=memlock=-1",
+		"--ulimit=stack=6710886",
+		"--gpus=all",
+		"--runtime=nvidia",
+		// "--memory=2G",
+		// "--memory-swap=8G",
+
+		
+	],
+	
+	"remoteUser": "${localEnv:USER}",
+	"workspaceFolder": "/home/${localEnv:USER}/${localWorkspaceFolderBasename}",
+	"workspaceMount": "source=${localWorkspaceFolder},target=/home/${localEnv:USER}/${localWorkspaceFolderBasename},type=bind",
+	"containerEnv": {
+		"DISPLAY": "${localEnv:DISPLAY}", // for GUI applications
+		"SSH_AUTH_SOCK": "/ssh-agent",
+		"CYCLONEDDS_URI":"${localEnv:CYCLONEDDS_URI}"
+	},
+	"mounts": [
+		// "source=${localEnv:SSH_AUTH_SOCK},target=/ssh-agent,type=bind,consistency=cached",
+		"source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind,consistency=cached",
+		"source=/home/${localEnv:USER}/.ssh,target=/home/ros/.ssh,type=bind,consistency=cached",
+		"source=/home/${localEnv:USER}/DATA,target=/DATA,type=bind,consistency=cached",
+		"source=/mnt/,target=/mnt,type=bind,consistency=cached",
+		"source=/dev/shm,target=/dev/shm,type=bind,consistency=cached",
+		"source=/home/${localEnv:USER}/DEV/dds_profiles,target=/home/${localEnv:USER}/DEV/dds_profiles,type=bind,consistency=cached"
+	],
+	// "postCreateCommand": ["sudo sysctl -w net.core.rmem_max=2147483647",
+	// 					  "sudo sysctl net.ipv4.ipfrag_time=3",
+	// 					  "sudo sysctl net.ipv4.ipfrag_high_thresh=134217728"
+	// ],
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"dotjoshjohnson.xml",
+				"zachflower.uncrustify",
+				"ms-python.python",
+				"ms-vscode.cpptools",
+				"redhat.vscode-yaml",
+				"ms-iot.vscode-ros",
+				"smilerobotics.urdf",
+				"streetsidesoftware.code-spell-checker",
+				"twxs.cmake",
+				"yzhang.markdown-all-in-one",
+				"mhutchie.git-graph",
+				"GitHub.copilot",
+				"ms-toolsai.jupyter"
+			]
+		}
+	}
+}
