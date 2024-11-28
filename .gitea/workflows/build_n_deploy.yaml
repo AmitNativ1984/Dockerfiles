@@ -30,7 +30,7 @@ jobs:
               
               http = true
               insecure = true                        
-          cache-from: type=registry,ref=docker-registry.ironbrain.internal:5000/${{ github.event.repository.name }}:latest
+          cache-from: type=registry,ref=docker-registry.ironbrain.internal:5000/ros2.pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0
       
       - name: Build and Push amd64
         uses: docker/build-push-action@v6
