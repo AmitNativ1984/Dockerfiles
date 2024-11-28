@@ -6,7 +6,7 @@ on:
       - 'v*'
 
 env:
-	ROS_DISTRO: humble
+	ROS_DISTRO: "humble"
 
 jobs:
   docker_build:
