@@ -37,7 +37,6 @@ jobs:
         with:
           platforms: linux/amd64
           file: ros2.pytorch.amd64.Dockerfile
-          target: prod
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
@@ -53,7 +52,6 @@ jobs:
         with:
           platforms: linux/arm64
           file: ros2.pytorch.aarch64.Dockerfile
-          target: prod
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
