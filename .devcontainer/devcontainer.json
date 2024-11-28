@@ -1,16 +1,17 @@
 // See https://aka.ms/vscode-remote/devcontainer.json for format details.
 {
 	"name": "${localWorkspaceFolderBasename}",
-	"dockerFile": "../ros2.pytorch.Dockerfile",
+	"dockerFile": "../ros2.pytorch.amd64.Dockerfile",
 	"build": {
 		"args": {
 			// "BASE_IMAGE": "ultralytics/ultralytics:latest-jetson-jetpack6",
 			// "BASE_IMAGE": "nvcr.io/nvidia/cuda:12.2.2-cudnn8-runtime-ubuntu22.04",
-			"BASE_IMAGE": "docker-registry.ironbrain.internal:5000/ros-pytorch-base:humble-pytorch2.3.0",
+			// "BASE_IMAGE": "docker-registry.ironbrain.internal:5000/ros-pytorch-base:humble-pytorch2.3.0",
+			"BASE_IMAGE": "nvcr.io/nvidia/cuda:12.2.2-cudnn8-devel-ubuntu22.04",
 			"ROS_DISTRO": "humble",
 			"USERNAME": "${localEnv:USER}"			
 		},
-		"target": "dev",
+		"target": "base",
 		
 	},
 	"privileged": true,
@@ -34,9 +35,9 @@
 		
 	],
 	
-	"remoteUser": "${localEnv:USER}",
-	"workspaceFolder": "/home/${localEnv:USER}/${localWorkspaceFolderBasename}",
-	"workspaceMount": "source=${localWorkspaceFolder},target=/home/${localEnv:USER}/${localWorkspaceFolderBasename},type=bind",
+	// "remoteUser": "${localEnv:USER}",
+	// "workspaceFolder": "/home/${localEnv:USER}/${localWorkspaceFolderBasename}",
+	// "workspaceMount": "source=${localWorkspaceFolder},target=/home/${localEnv:USER}/${localWorkspaceFolderBasename},type=bind",
 	"containerEnv": {
 		"DISPLAY": "${localEnv:DISPLAY}", // for GUI applications
 		"SSH_AUTH_SOCK": "/ssh-agent",

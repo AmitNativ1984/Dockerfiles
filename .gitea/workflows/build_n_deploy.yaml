@@ -1,0 +1,77 @@
+name: Gitea Actions Package Build
+run-name: ${{ gitea.actor }} 🚀
+on:
+  push:
+    branches:
+      - staging
+
+env:
+	ROS_DISTRO: humble,
+
+jobs:
+  docker_build:
+    runs-on: ubuntu-latest
+    container: catthehacker/ubuntu:act-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+        with:
+          ref: staging
+      
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          config-inline: |
+            [registry."docker-registry.ironbrain.internal:5000"]
+              
+              http = true
+              insecure = true                        
+          cache-from: type=registry,ref=docker-registry.ironbrain.internal:5000/${{ github.event.repository.name }}:latest
+      
+      - name: Build and Push amd64
+        uses: docker/build-push-action@v6
+        with:
+          platforms: linux/amd64
+          file: Dockerfile
+          target: prod
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          build-args: |
+            BASE_IMAGE: nvcr.io/nvidia/cuda:12.2.2-cudnn8-devel-ubuntu22.04
+            ROS_DISTRO: ${{ env.ROS_DISTRO }}
+          tags: |
+            docker-registry.ironbrain.internal:5000/ros2.pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0-amd64            
+          context: .
+          push: true
+      
+      - name: Build and Push arm64
+        uses: docker/build-push-action@v6
+        with:
+          platforms: linux/arm64
+          file: Dockerfile
+          target: prod
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          build-args: |
+            BASE_IMAGE=ultralytics/ultralytics:latest-jetson-jetpack6            
+            ROS_DISTRO: ${{ env.ROS_DISTRO }}
+          tags: |
+            docker-registry.ironbrain.internal:5000/ros2.pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0-aarch64                 
+          context: .
+          push: true
+
+      - name: merge images latest
+        run: |
+          docker buildx imagetools create \
+          -t docker-registry.ironbrain.internal:5000/ros2.pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0 \
+          docker-registry.ironbrain.internal:5000/ros2.pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0-amd64 \
+          docker-registry.ironbrain.internal:5000/ros2.pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0-aarch64
+
+      - name: cleanup
+        run: |
+          docker rmi docker-registry.ironbrain.internal:5000/ros2.pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0-amd64
+          docker rmi docker-registry.ironbrain.internal:5000/ros2.pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0-aarch64
+        

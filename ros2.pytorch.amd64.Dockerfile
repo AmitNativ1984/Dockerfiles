@@ -72,5 +72,5 @@ RUN sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/
       python3-libnvinfer-dev &&\
     python3 -m pip install \
       onnx \
-      onnx-graphsurgeon
-
+      onnx-graphsurgeon \
+      pycuda      
