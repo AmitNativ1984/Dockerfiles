@@ -3,7 +3,7 @@ run-name: ${{ gitea.actor }} 🚀
 on:
   push:
     tags:
-      - 'v*'
+      - '*'
 
 env:
 	ROS_DISTRO: humble,
