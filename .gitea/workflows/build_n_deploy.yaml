@@ -37,8 +37,8 @@ jobs:
         with:
           platforms: linux/amd64
           file: ros2.pytorch.amd64.Dockerfile
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
+          cache-from: type=registry,ref=docker-registry.ironbrain.internal:5000/ros2.pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0-cache
+          cache-to: type=registry,ref=docker-registry.ironbrain.internal:5000/ros2.pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0-cache,mode=max
           build-args: |
             BASE_IMAGE=nvcr.io/nvidia/cuda:12.2.2-cudnn8-devel-ubuntu22.04
             ROS_DISTRO=${{ env.ROS_DISTRO }}
@@ -52,8 +52,8 @@ jobs:
         with:
           platforms: linux/arm64
           file: ros2.pytorch.aarch64.Dockerfile
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
+          cache-from: type=registry,ref=docker-registry.ironbrain.internal:5000/ros2.pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0-cache
+          cache-to: type=registry,ref=docker-registry.ironbrain.internal:5000/ros2.pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0-cache,mode=max
           build-args: |
             BASE_IMAGE=ultralytics/ultralytics:latest-jetson-jetpack6            
             ROS_DISTRO=${{ env.ROS_DISTRO }}
@@ -73,4 +73,4 @@ jobs:
         run: |
           docker rmi docker-registry.ironbrain.internal:5000/ros2.pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0-amd64
           docker rmi docker-registry.ironbrain.internal:5000/ros2.pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0-aarch64
-        
+      
