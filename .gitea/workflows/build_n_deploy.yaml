@@ -37,7 +37,8 @@ jobs:
         with:
           platforms: linux/amd64
           file: ros2.pytorch.amd64.Dockerfile
-          cache-from: type=gha
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
           build-args: |
             BASE_IMAGE=nvcr.io/nvidia/cuda:12.2.2-cudnn8-devel-ubuntu22.04
             ROS_DISTRO=${{ env.ROS_DISTRO }}
@@ -51,7 +52,8 @@ jobs:
         with:
           platforms: linux/arm64
           file: ros2.pytorch.aarch64.Dockerfile
-          cache-from: type=gha
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
           build-args: |
             BASE_IMAGE=ultralytics/ultralytics:latest-jetson-jetpack6            
             ROS_DISTRO=${{ env.ROS_DISTRO }}
