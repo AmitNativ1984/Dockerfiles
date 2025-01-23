@@ -6,7 +6,6 @@
 		"args": {
 			// "BASE_IMAGE": "ultralytics/ultralytics:latest-jetson-jetpack6",
 			// "BASE_IMAGE": "nvcr.io/nvidia/cuda:12.2.2-cudnn8-runtime-ubuntu22.04",
-			// "BASE_IMAGE": "docker-registry.ironbrain.internal:5000/ros-pytorch-base:humble-pytorch2.3.0",
 			"BASE_IMAGE": "nvcr.io/nvidia/cuda:12.2.2-cudnn8-devel-ubuntu22.04",
 			"ROS_DISTRO": "humble",
 			"USERNAME": "${localEnv:USER}"			
