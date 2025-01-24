@@ -1,12 +1,11 @@
 // See https://aka.ms/vscode-remote/devcontainer.json for format details.
 {
 	"name": "${localWorkspaceFolderBasename}",
-	"dockerFile": "../ros2.pytorch.amd64.Dockerfile",
+	"dockerFile": "../ros2.pytorch.aarch64.Dockerfile",
 	"build": {
 		"args": {
-			// "BASE_IMAGE": "ultralytics/ultralytics:latest-jetson-jetpack6",
-			// "BASE_IMAGE": "nvcr.io/nvidia/cuda:12.2.2-cudnn8-runtime-ubuntu22.04",
-			"BASE_IMAGE": "nvcr.io/nvidia/cuda:12.2.2-cudnn8-devel-ubuntu22.04",
+			"BASE_IMAGE": "nvcr.io/nvidia/cuda:12.6.3-cudnn-devel-ubuntu22.04",
+			// "BASE_IMAGE": "nvcr.io/nvidia/cuda:12.2.2-cudnn8-devel-ubuntu22.04",
 			"ROS_DISTRO": "humble",
 			"USERNAME": "${localEnv:USER}"			
 		},

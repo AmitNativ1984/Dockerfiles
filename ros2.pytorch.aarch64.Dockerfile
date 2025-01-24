@@ -32,8 +32,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libomp-dev \
     && rm -rf /var/lib/apt/lists/*
 
-RUN pip3 install --no-dependencies pycuda==2024.1.2
-
 # #################################
 # ### INSTALL ROS 2 ###############
 # #################################
@@ -65,3 +63,21 @@ RUN sudo apt-get update \
     && sudo apt-get install -y \
         ros-$ROS_DISTRO-ros-base \
     && rm -rf /var/lib/apt/lists/* 
+
+# Install pytorch
+# links found on: https://pypi.jetson-ai-lab.dev/jp6
+RUN pip3 install \
+    numpy=='1.26.1' \
+    # torch
+    https://pypi.jetson-ai-lab.dev/jp6/cu124/+f/5fe/ee5f5d1a75229/torch-2.3.0-cp310-cp310-linux_aarch64.whl#sha256=5feee5f5d1a75229eb5290c6fcdc534658dd8b99e55e4a49e8f7c509c313d52d \
+    # torchvision
+    https://pypi.jetson-ai-lab.dev/jp6/cu124/+f/988/cb71323efff87/torchvision-0.18.0a0+6043bc2-cp310-cp310-linux_aarch64.whl#sha256=988cb71323efff87bcf503c9c4e94a8e19a351c96146d0806f194f48da52aaa2
+
+# tensorrt
+RUN sudo apt-get update &&\
+    sudo apt-get install -y \
+        python3-libnvinfer* &&\
+    python3 -m pip install \
+        onnx \
+        onnx-graphsurgeon \
+        pycuda      
