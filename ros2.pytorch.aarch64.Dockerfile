@@ -36,6 +36,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # ### INSTALL ROS 2 ###############
 # #################################
 ARG ROS_DISTRO=humble
+ENV ROS_DISTRO=$ROS_DISTRO
 
 RUN apt-get update && apt-get install -y \
   locales \
