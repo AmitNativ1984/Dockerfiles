@@ -2,7 +2,7 @@
 # BASE IMAGE
 ################################
 
-ARG BASE_IMAGE
+ARG BASE_IMAGE=nvcr.io/nvidia/cuda:12.2.2-cudnn8-devel-ubuntu22.04
 FROM $BASE_IMAGE AS base
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -27,7 +27,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # install ROS2
-ARG ROS_DISTRO
+ARG ROS_DISTRO=humble
 
 RUN apt-get update && apt-get install -y \
   locales \

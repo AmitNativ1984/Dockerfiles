@@ -7,7 +7,7 @@
 			"BASE_IMAGE": "nvcr.io/nvidia/cuda:12.6.3-cudnn-devel-ubuntu22.04",
 			// "BASE_IMAGE": "nvcr.io/nvidia/cuda:12.2.2-cudnn8-devel-ubuntu22.04",
 			"ROS_DISTRO": "humble",
-			"USERNAME": "${localEnv:USER}"			
+			// "USERNAME": "${localEnv:USER}"			
 		},
 		"target": "base",
 		

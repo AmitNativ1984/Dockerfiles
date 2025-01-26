@@ -2,8 +2,8 @@
 # BASE IMAGE
 ################################
 
-ARG BASE_IMAGE
-FROM $BASE_IMAGE as base
+ARG BASE_IMAGE=nvcr.io/nvidia/cuda:12.6.3-cudnn-devel-ubuntu22.04
+FROM $BASE_IMAGE AS base
 
 ENV SHELL /bin/bash
 SHELL [ "/bin/bash", "-c" ]
@@ -35,7 +35,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # #################################
 # ### INSTALL ROS 2 ###############
 # #################################
-ARG ROS_DISTRO
+ARG ROS_DISTRO=humble
 
 RUN apt-get update && apt-get install -y \
   locales \
