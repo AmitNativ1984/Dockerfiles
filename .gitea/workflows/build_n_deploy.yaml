@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - name: Print Release Info
-        run: echo "Release created:: ${{ github.event.tag_name }}"
+        run: echo "Release created ${{ github.event.tag_name }}"
               
       - name: Check out repository code
         uses: actions/checkout@v4
