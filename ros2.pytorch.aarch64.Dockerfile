@@ -11,16 +11,16 @@ SHELL [ "/bin/bash", "-c" ]
 ENV DEBIAN_FRONTEND=noninteractive
 
 # # install common tools
-# RUN apt-get update && apt-get install -y --no-install-recommends \
-#     sudo \
-#     curl \
-#     ca-certificates \
-#     gnupg \
-#     lsb-release \
-#     python3-pip \
-#     wget \
-#     zip \
-#     git \
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    sudo \
+    curl \
+    ca-certificates \
+    gnupg \
+    lsb-release \
+    python3-pip \
+    wget \
+    zip \
+    git \
 #     libglvnd0 \
 #     libgl1 \
 #     libglx0 \
@@ -30,7 +30,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 #     libopenmpi-dev \
 #     libopenblas-base \
 #     libomp-dev \
-#     && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/*
 
 RUN pip3 install --no-dependencies pycuda==2024.1.2
 
