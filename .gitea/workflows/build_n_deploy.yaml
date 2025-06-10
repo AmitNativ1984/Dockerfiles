@@ -52,7 +52,7 @@ jobs:
             BASE_IMAGE=nvcr.io/nvidia/cuda:12.2.2-cudnn8-devel-ubuntu22.04
             ROS_DISTRO=${{ env.ROS_DISTRO }}
           tags: |
-            ${{ env.DOCKER_REGISTRY }}/ros2.pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0-amd64            
+            ${{ env.DOCKER_REGISTRY }}/ros2-pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0-amd64            
           context: .
           push: true
       
@@ -67,18 +67,18 @@ jobs:
             BASE_IMAGE=ultralytics/ultralytics:latest-jetson-jetpack6            
             ROS_DISTRO=${{ env.ROS_DISTRO }}
           tags: |
-            ${{ env.DOCKER_REGISTRY }}/ros2.pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0-aarch64                 
+            ${{ env.DOCKER_REGISTRY }}/ros2-pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0-aarch64                 
           context: .
           push: true
 
       - name: merge images latest
         run: |
           docker buildx imagetools create \
-          -t ${{ env.DOCKER_REGISTRY }}/ros2.pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0 \
-          ${{ env.DOCKER_REGISTRY }}/ros2.pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0-amd64 \
-          ${{ env.DOCKER_REGISTRY }}/ros2.pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0-aarch64
+          -t ${{ env.DOCKER_REGISTRY }}/ros2-pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0 \
+          ${{ env.DOCKER_REGISTRY }}/ros2-pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0-amd64 \
+          ${{ env.DOCKER_REGISTRY }}/ros2-pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0-aarch64
 
       - name: cleanup
         run: |
-          docker rmi ${{ env.DOCKER_REGISTRY }}/ros2.pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0-amd64
-          docker rmi ${{ env.DOCKER_REGISTRY }}/ros2.pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0-aarch64
+          docker rmi ${{ env.DOCKER_REGISTRY }}/ros2-pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0-amd64
+          docker rmi ${{ env.DOCKER_REGISTRY }}/ros2-pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0-aarch64
