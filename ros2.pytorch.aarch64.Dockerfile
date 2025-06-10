@@ -10,7 +10,7 @@ SHELL [ "/bin/bash", "-c" ]
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# install common tools
+# # install common tools
 RUN apt-get update && apt-get install -y --no-install-recommends \
     sudo \
     curl \
@@ -21,15 +21,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     wget \
     zip \
     git \
-    libglvnd0 \
-    libgl1 \
-    libglx0 \
-    libegl1 \
-    libxext6 \
-    libx11-6 \
-    libopenmpi-dev \
-    libopenblas-base \
-    libomp-dev \
+#     libglvnd0 \
+#     libgl1 \
+#     libglx0 \
+#     libegl1 \
+#     libxext6 \
+#     libx11-6 \
+#     libopenmpi-dev \
+#     libopenblas-base \
+#     libomp-dev \
     && rm -rf /var/lib/apt/lists/*
 
 RUN pip3 install --no-dependencies pycuda==2024.1.2
