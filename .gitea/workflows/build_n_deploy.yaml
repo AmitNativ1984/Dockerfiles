@@ -3,7 +3,7 @@ run-name: ${{ gitea.actor }} 🚀
 on:
   release:
     types: [published]
-    
+
 jobs:
   docker_build:
     env:
@@ -79,5 +79,4 @@ jobs:
 
       - name: cleanup
         run: |
-          docker rmi ${{ env.DOCKER_REGISTRY }}/ros2-pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0-amd64
-          docker rmi ${{ env.DOCKER_REGISTRY }}/ros2-pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0-aarch64
+          docker rmi -f ${docker images -q} 
