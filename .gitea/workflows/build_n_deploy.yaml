@@ -81,7 +81,7 @@ jobs:
         run: |
           docker rmi -f ${docker images -q} 
 
-      - name: Delete old ECR images
+      - name: Delete old ECR images and untagged images
         uses: agungwa/ECR-Lifecycle-Manager@v1.1.1
         with:
           repo_name: ${{ env.DOCKER_REGISTRY }}/ros2-pytorch
