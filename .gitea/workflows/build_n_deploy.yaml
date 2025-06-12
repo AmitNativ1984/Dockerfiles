@@ -77,10 +77,6 @@ jobs:
           ${{ env.DOCKER_REGISTRY }}/ros2-pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0-amd64 \
           ${{ env.DOCKER_REGISTRY }}/ros2-pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0-aarch64
 
-      - name: cleanup
-        run: |
-          docker image prune -a -f
-          
       - name: Delete old ECR images and untagged images
         uses: agungwa/ECR-Lifecycle-Manager@v1.1.1
         with:
@@ -88,3 +84,7 @@ jobs:
           num_to_keep: 20
           dry_run: true
           delete_untagged_images: true
+          
+      - name: cleanup
+        run: |
+          docker image prune -a -f
