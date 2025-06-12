@@ -52,32 +52,34 @@ jobs:
             BASE_IMAGE=nvcr.io/nvidia/cuda:12.2.2-cudnn8-devel-ubuntu22.04
             ROS_DISTRO=${{ env.ROS_DISTRO }}
           tags: |
-            ${{ env.DOCKER_REGISTRY }}/ros2-pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0-amd64            
+            ${{ env.DOCKER_REGISTRY }}/ros2-pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0
+          # TODO: changle to this tag later: ${{ env.DOCKER_REGISTRY }}/ros2-pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0-amd64            
           context: .
           push: true
       
-      - name: Build and Push arm64
-        uses: docker/build-push-action@v6
-        with:
-          platforms: linux/arm64
-          file: ros2.pytorch.aarch64.Dockerfile
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
-          provenance: false
-          build-args: |
-            BASE_IMAGE=ultralytics/ultralytics:latest-jetson-jetpack6            
-            ROS_DISTRO=${{ env.ROS_DISTRO }}
-          tags: |
-            ${{ env.DOCKER_REGISTRY }}/ros2-pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0-aarch64                 
-          context: .
-          push: true
+    
+      # - name: Build and Push arm64
+      #   uses: docker/build-push-action@v6
+      #   with:
+      #     platforms: linux/arm64
+      #     file: ros2.pytorch.aarch64.Dockerfile
+      #     cache-from: type=local,src=/tmp/.buildx-cache
+      #     cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
+      #     provenance: false
+      #     build-args: |
+      #       BASE_IMAGE=ultralytics/ultralytics:latest-jetson-jetpack6            
+      #       ROS_DISTRO=${{ env.ROS_DISTRO }}
+      #     tags: |
+      #       ${{ env.DOCKER_REGISTRY }}/ros2-pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0-aarch64                 
+      #     context: .
+      #     push: true
 
-      - name: merge images latest
-        run: |
-          docker buildx imagetools create \
-          -t ${{ env.DOCKER_REGISTRY }}/ros2-pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0 \
-          ${{ env.DOCKER_REGISTRY }}/ros2-pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0-amd64 \
-          ${{ env.DOCKER_REGISTRY }}/ros2-pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0-aarch64
+      # - name: merge images latest
+      #   run: |
+      #     docker buildx imagetools create \
+      #     -t ${{ env.DOCKER_REGISTRY }}/ros2-pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0 \
+      #     ${{ env.DOCKER_REGISTRY }}/ros2-pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0-amd64 \
+      #     ${{ env.DOCKER_REGISTRY }}/ros2-pytorch:${{ env.ROS_DISTRO }}-pytorch2.3.0-aarch64
 
       - name: Delete old ECR images and untagged images
         uses: agungwa/ECR-Lifecycle-Manager@v1.1.1
