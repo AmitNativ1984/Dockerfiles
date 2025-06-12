@@ -79,8 +79,8 @@ jobs:
 
       - name: cleanup
         run: |
-          docker rmi -f ${docker images -q} 
-
+          docker image prune -a -f
+          
       - name: Delete old ECR images and untagged images
         uses: agungwa/ECR-Lifecycle-Manager@v1.1.1
         with:
