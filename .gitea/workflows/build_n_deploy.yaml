@@ -85,6 +85,6 @@ jobs:
           dry_run: true
           delete_untagged_images: true
 
-      # - name: cleanup
-      #   run: |
-      #     docker image prune -a -f
+      - name: cleanup
+        run: |
+          docker image prune -a -f
